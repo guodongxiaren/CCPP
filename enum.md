@@ -71,7 +71,7 @@ a = (enum weekday)2;
 enum season
 {
     spring=5,summer=1,autumn,winter
-}；
+};
 ```
 此时autumn和winter是在summer（其值为1）的基础上顺序加1。
 }
