@@ -18,4 +18,4 @@ C++在包含C语言的标准库头文件的时候，习惯做法是去掉`.h后缀`，并且加上`c前缀`。
 |[stdlib.h][stdlib]|
 
 -------
-stdlib:stdlib.md
+[stdlib]:stdlib.md
