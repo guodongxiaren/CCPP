@@ -72,3 +72,64 @@ base的取值范围为：
 unsigned long strtoul(const char *s,char **endp,int base)
 ```
 与strtol类似，只不过转换后的类型是unsigned long类型。
+
+数值计算
+--------
+|函数名|描述
+|------|----
+|abs|求int型绝对值
+|labs|求long型绝对值
+|div|int型除法，保留商和余数
+|ldiv|long型除法，保留商和余数
+
+###abs
+```c
+int abs(int n)
+```
+求绝对值。同理还有用于长整型取整的**labs**函数。
+###div
+```c
+div_t div(int num,int denom)
+```
+参数：
+* num是被除数
+* denom是除数
+
+商是div_t类型。
+```c
+/* 在stdlib.h头文件中定义 */
+typedef struct
+{
+    int quot;  //商
+    int rem;   //余数
+}div_t;
+```
+同理还有用于长整型除法的**ldiv**函数，它的返回值类型为**ldiv_t**。
+算法相关
+--------
+###rand
+```c
+int rand()
+```
+通常不单独使用，需要使用srand函数设置随机数种子。
+实际是伪随机数，如果设置的种子相同，则随机数产生的数字序列可以认为固定了。
+###srand
+```c
+void srand(unsigned int seed)
+```
+其参数为新的随机数序列的种子。这个序列后来对rand的调用返回。通常以时间为种子,这样可以避免种子相同。
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main()
+{
+    int i;
+    srand((unsigned)time(NULL));
+    for(i=0;i<MAX;i++)
+    {
+        printf("%d",rand()%100);
+    }
+}
+```
