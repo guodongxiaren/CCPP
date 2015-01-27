@@ -36,6 +36,7 @@ int   memcmp(const void *s1, const void *s2, size_t n);
 从s位置开始填充n个字节c。但c是一个整型，实际上c等于0和-1的时候，能把字节清空成0和-1。 
 ###memcpy&memmove
 memcpy和memmove完成的功能都是从src复制n个字节到dest位置。但是如果src要拷贝的内存区域与dest有重叠，那么memcpy的处理结果是不确定的，但是memmove能保证正确复制。  
-另有**memccpy**函数。
+>另有**memccpy**函数。
+
 ###memcmp
 如果s1的前n个字节和s2的前n个字节相比，从左到右逐个比较，返回第一个不相同的字节的差值（s1-s2）。
