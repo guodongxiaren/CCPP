@@ -32,3 +32,5 @@ void *memcpy(void *dest, const void *src, size_t n);
 void *memmove(void *dest, const void *src, size_t n);
 int   memcmp(const void *s1, const void *s2, size_t n);
 ```
+memcpy和memmove完成的功能都是从src复制n个字节到dest位置。但是如果src要拷贝的内存区域与dest有重叠，那么memcpy的处理结果是不确定的，但是memmove能保证正确复制。  
+另有**memccpy**函数。
