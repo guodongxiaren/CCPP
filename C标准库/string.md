@@ -23,8 +23,8 @@ bcmp是比较s1和s2的前n个字节是否相等。如果s1==s2或n=0则返回�
 ##mem开头
 * memset
 * memcpy
-* memcmp
 * memmove
+* memcmp
 
 ```c
 void *memset(void *s, int c, size_t n);
@@ -37,3 +37,5 @@ int   memcmp(const void *s1, const void *s2, size_t n);
 ###memcpy&memmove
 memcpy和memmove完成的功能都是从src复制n个字节到dest位置。但是如果src要拷贝的内存区域与dest有重叠，那么memcpy的处理结果是不确定的，但是memmove能保证正确复制。  
 另有**memccpy**函数。
+###memcmp
+如果s1的前n个字节和s2的前n个字节相比，大于等于小于，则返回大于0、0和小于0
