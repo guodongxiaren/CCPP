@@ -1,28 +1,34 @@
-�궨��
+宏定义
 =======
-�����÷������ǲ��ᡣ  
+基本用法，我们不提。   
+不管是#还是##都是配合宏函数来使用的，如下的用法是错的：
+```c
+#define PORT #80
+```
+这并不会把80变成字符串"80"
 ## **#**
-һ������`#`���ַ���������˼����ν�ַ����������ǽ�����ת��Ϊ�ַ�����  
-���磺
+一个井号`#`是字符串化的意思。所谓字符串化，就是将**符号**转化为字符串。  
+比如：
 ```c
 #include <stdio.h>
 
-#define PRINT(x) printf(#x" ��ֵ�� %s\n",x)
-#define PRINT2(x) printf("x ��ֵ�� %s\n",x)
+#define PRINT(x) printf(#x" 的值是 %s\n",x)
+#define PRINT2(x) printf("x 的值是 %s\n",x)
 int main()
 {
 	char * var = "hello world";
-	PRINT(var); //��ӡvar��ֵ�� hello world
-	PRINT2(var);//��ӡx��ֵ�� hello world
+	PRINT(var); //打印var的值是 hello world
+	PRINT2(var);//打印x的值是 hello world
 }
 ```
->����������в��ܽ�#xд������֮�У���*printf(#x" ��ֵ�� %s\n",x)*�����򽫴�ӡ#x ��ֵ�� hello world��  
-Ҳ���ܽ�x��ֵд���������棬��printf(x" ��ֵ�� %s\n",x)�������ᱣ������Ϊprinf�ĵ�һ�������������ַ����� 
+上面例子将参数字符串化
+>上面的例子中不能将#x写进引号之中，即*printf(#x" 的值是 %s\n",x)*，否则将打印#x 的值是 hello world。  
+也不能将x的值写到引号外面，即printf(x" 的值是 %s\n",x)，这样会保错，因为prinf的第一个参数必须是字符串。 
 
 ## **##**
-��������`##`�������궨���У���**���ӷ�**�����á�
-�ǽ��������ߵ��ַ����ӵ�һ��ע����������֮�����ɵ���**����**���������ַ�����  
-���磺
+两个井号`##`，用作宏定义中，起**连接符**的作用。
+是将左右两边的字符连接到一起，注意这里连接之后生成的是**符号**，而不是字符串。  
+比如：
 ```c
 #include <iostream>
 #define TEST(c) test##c
@@ -32,10 +38,10 @@ int main()
 	std::cout<<TEST(1)<<std::endl;
 }
 ```
-������ȷ��ӡ������test1��ֵ��
->��ν���ţ������ַ���������ָ�ı����������������������������ȵȡ�
+可以正确打印出变量test1的值。
+>所谓符号，不是字符串，而是指的变量名，类型名，函数名、宏名等等。
 
-����Ȥ�������ǣ�
+更有趣的例子是：
 ```c
 #include <iostream>
 #define TEST(c) test[##c]
