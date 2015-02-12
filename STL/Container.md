@@ -8,9 +8,11 @@
 |vector  |set     |stack|*unordered_map*
 |deque   |mutiset |queue|*unordered_set*
 |list    |map     |*priority_queue*|
-|array<kbd>c++11</kdb>|mutimap ||
-|*forward_list*<kbd>c++11</kdb>|||
+|*forward_list* <kbd>c++11</kdb>|mutimap ||
+|array <kbd>c++11</kdb>|||
 >无序容器是C++11新增的，此处无序是unordered而不是unsorted
+
+map对应Java中的TreeMap，*unordered_map*对应Java中的HashMap。
 
 ##顺序容器
 容器无序，元素插入位置同元素的值无关。
