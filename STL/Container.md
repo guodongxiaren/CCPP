@@ -3,12 +3,14 @@
 容器有三类：顺序容器，关联容器，容器适配器
 ----
 ##分类
-|顺序容器|关联容器|容器适配器|
-|:------:|:------:|:--------:|
-|vector  |set     |stack
-|deque   |mutiset |queue
-|list    |map     |_priority_queue_
-|        |mutimap |
+|顺序容器|关联容器|容器适配器|无序容器<kbd>c++11</kdb>
+|:------:|:------:|:--------:|:------:
+|vector  |set     |stack|*unordered_map*
+|deque   |mutiset |queue|*unordered_set*
+|list    |map     |*priority_queue*|
+|array<kbd>c++11</kdb>|mutimap ||
+|*forward_list*<kbd>c++11</kdb>|||
+>无序容器是C++11新增的，此处无序是unordered而不是unsorted
 
 ##顺序容器
 容器无序，元素插入位置同元素的值无关。
