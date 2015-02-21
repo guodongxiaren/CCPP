@@ -17,6 +17,7 @@ C++在包含C语言的标准库头文件的时候，习惯做法是去掉`.h后�
 |-------|-----
 |[stdlib.h](stdlib.md)|
 |[stdio.h](stdio.md)|
+|[stdarg.h](stdarg.md)|
 |[string.h](string.md)|
 
 -------
