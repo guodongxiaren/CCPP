@@ -5,10 +5,12 @@
 |c|char 
 |s|char *
 |f|float,double
+|p|指针类型
 |lf|double
 |lu|unsigned long
 >在printf的时候double类型可以用%f或%lf。而scanf的时候double要用%lf
 
+当用%p输出指针地址的时候，格式是**0x**加上十六进制地址值。如果为空指针则打印**(nil)**。  
 ###格式化串 "%a.bs"  
 - 对于a,它表示如果字符串长度小于a,那么右对齐左边补空格，若大于a则原样输出不限制
 - 对于b，它表示如果字符串长度超过b，那么只取前b个
