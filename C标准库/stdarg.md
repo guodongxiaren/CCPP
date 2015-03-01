@@ -1,7 +1,8 @@
 stdarg.h
 ===========
 定义了可变参数列表的函数声明方式
-##包含内容
+##基本内容
+“四”个宏一个类型
 ###重要的宏
 - va_start
 - va_arg
@@ -39,4 +40,11 @@ while(n--){
 ```c
 void va_end(va_list ap);
 ```
-
+##函数
+```c
+int vprintf(const char *format, va_list ap);
+int vfprintf(FILE *stream, const char *format, va_list ap);
+int vsprintf(char *str, const char *format, va_list ap);
+int vsnprintf(char *str, size_t size, const char *format, va_list ap);
+```
+以上函数参数中的format和printf的第一个参数相同，最后一个参数ap就是可变参数。它们的主要区别是输出位置不同。
