@@ -1,13 +1,19 @@
 string.h
 ============
-##str开头
+str开头
+--------
 ###strchr
 查找字符串中某个字符首次出现的位置
 ```c
 char *strchr(char *str,int ch)
 ```
 返回首次出现字符ch的位置的指针，如果不存在返回NULL。
-##b开头<kbd>deprecated</kbd>
+###strcpy和strdup
+都是复制字符串，不过strcpy是复制到栈中，而strdup是分配一个堆内存来存储，返回其首地址，用free函数释放。
+
+
+b开头<kbd>deprecated</kbd>
+-------------------
 b开头的这几个函数只在gcc中有，VC中不存在。并且最新的POSIX标准不推荐使用这几个函数了，应该用mem系列函数来替代。
 * bzero：用memset来替代
 * bcopy：用memcpy或memmove来替代
