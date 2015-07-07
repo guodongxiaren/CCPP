@@ -53,7 +53,7 @@ priority<node *, vector<node *>, cmpNode> nodes;
 
 ----------------------------------------------------------------------
 ##类模板
-_std::priority_queue_
+`std::priority_queue`
 ```cpp
 template <class T, class Container = vector<T>,
   class Compare = less<typename Container::value_type> > class priority_queue;
@@ -61,9 +61,9 @@ template <class T, class Container = vector<T>,
 ##成员 
 |成员名|描述|
 |:----------:|--------------|
-|_value_type_|第一个参数T|
-|_container_type_|第二个参数Container|
-|_sieze_type_|通常和_size_t相同|
+|*value_type*|第一个参数T|
+|*container_type*|第二个参数Container|
+|*sieze_type*|通常和*size_t*相同|
 
 ##成员函数
 |函数名|返回值|
@@ -72,7 +72,7 @@ template <class T, class Container = vector<T>,
 |empty|bool|
 |pop|void|
 |push|void|
-|size|_size_type_|
+|size|*size_type*|
 |top|_const value_type&_|
 >优先队列没有front成员函数，取而代之是top函数。queue有front成员函数。
 因为优先队列是堆实现的，想象一下堆的结构，就知道top这个词更合理。
