@@ -66,7 +66,7 @@ struct SUM
     {
         sum_D += elem;
     }
-    operator double()
+    operator double()     //重载类型转换操作符无返回值
     {
         return static_cast<double>(sum_D);
     }
@@ -82,6 +82,6 @@ int main()
 
     double sum = for_each(myvector.begin(), myvector.end(), SUM());
     cout<<"The SUM: "<<sum<<endl;
-    cout<<double(SUM())<<endl;
+    cout<<double(SUM())<<endl; //未重载类型转换操作符double()，则此句报错。
 }
 ```
