@@ -28,3 +28,24 @@ private:
 另外从实现角度来看分为：
 - 编译时多态 （模板、重载）
 - 运行时多态 （虚函数）
+
+##各种对象构造方式
+```cpp
+class Foo
+{
+public:
+	Foo();
+	Foo(int);
+};
+...
+// main中
+Foo a = Foo(); 		// 正确
+Foo a = Foo;		// 错误
+Foo b = new Foo();	// 正确
+Foo b = new Foo;	// 正确
+
+Foo a();			// 错误
+Foo a(100);			// 错误
+
+Foo();				// 正确，构造了匿名对象
+```
