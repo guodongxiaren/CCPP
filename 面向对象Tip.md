@@ -49,3 +49,27 @@ Foo a(100);			// 错误
 
 Foo();				// 正确，构造了匿名对象
 ```
+##const成员函数重载问题
+一个成员函数被标记为const，表示其不能修改类的成员。但是这个函数与无const版本是合法重载。
+```cpp
+class A{
+private:
+    int a;
+public:
+    A(int aa):a(aa){}
+    // 以下两个重载均合法
+    void echo(int b){cout<<b<<endl;}
+    void echo(int b)const{cout<<a<<endl;}
+};
+```
+此时这两个成员函数到底哪个被调用取决于类的常量性。
+```cpp
+int main()
+{
+	A a0(1);
+	a0.echo(2);   // 输出1
+	const A a1(1);
+	a1.echo(2);   // 输出2
+}
+
+```
