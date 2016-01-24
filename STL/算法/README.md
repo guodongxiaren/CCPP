@@ -24,7 +24,7 @@ STL的算法库的设计思想不符合面向对象的风格，但是符合泛�
 |partition|将所有满足条件的元素移到前部，返回第一个不满足条件的迭代器。
 |stable_partition|同上，不过是稳定的
 |nth_element|将满足条件的前n个元素移到前部，该部分无序
-|paritial_sort|部分排序，排序部分有序
+|partial_sort|部分排序，排序部分有序
 |sort|快排，比qsort效率高
 |stable_sort|稳定快排，比sort效率低
 
