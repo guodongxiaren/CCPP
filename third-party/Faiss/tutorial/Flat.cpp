@@ -7,13 +7,14 @@
 using idx_t = faiss::Index::idx_t;
 
 int main() {
-    int d = 64;      // dimension：维
-    int nb = 100000; // 数据库大小
+    int d = 64;      // dimension：维，表示列数
+    int nb = 100000; // 数据库大小(单位是向量个数，而非元素个数，也就是表示行数)
     int nq = 10000;  // query大小
 
     float *xb = new float[d * nb];
     float *xq = new float[d * nq];
 
+    // 初始化xb
     // xb理解成一个矩阵(nb行，d列)，虽然说一个一维数组
     for (int i = 0; i < nb; i++) {
         for (int j = 0; j < d; j++) {
@@ -21,11 +22,18 @@ int main() {
         }
         xb[d * i] += i / 1000.;
     }
+    // 初始化xq
+    for (int i = 0; i < nq; i++) {
+        for (int j = 0; j < d; j++) {
+            xq[d * i + j] = drand48();
+        }
+        xq[d * i] += i / 1000.;
+    }
 
     faiss::IndexFlatL2 index(d); // 构造函数
     printf("is_trained = %s\n", index.is_trained ? "true" : "false");
     index.add(nb, xb); // 把向量(vector)添加到索引(index)
-    printf("ntotal = %zd\n", index.ntotal);
+    printf("ntotal = %lld\n", index.ntotal);
 
     int k = 4;
 
@@ -39,7 +47,7 @@ int main() {
         printf("I=\n");
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < k; j++) {
-                printf("%5zd ", I[i * k + j]);
+                printf("%5lld ", I[i * k + j]);
             }
             printf("\n");
         }
@@ -65,14 +73,14 @@ int main() {
         printf("I(5 fist results)=\n");
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < k; j++) {
-                printf("%5zd ", I[i * k + j]);
+                printf("%5lld ", I[i * k + j]);
             }
             printf("\n");
         }
         printf("I(5 last results)=\n");
         for (int i = nq - 5; i < nq; i++) {
             for (int j = 0; j < k; j++) {
-                printf("%zd ", I[i * k + j]);
+                printf("%5lld ", I[i * k + j]);
             }
             printf("\n");
         }

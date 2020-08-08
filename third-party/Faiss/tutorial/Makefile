@@ -5,7 +5,7 @@ CFLAGS = -std=c++11 -lfaiss -lomp
 
 ALL: $(BIN)
 
-%: %.cpp
+%.out: %.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
 .PHONY: clean love
