@@ -1,7 +1,9 @@
 SOURCE = $(wildcard *.cpp)
 UT = $(subst test_,,$(patsubst %.cpp,%,$(SOURCE)))
 ROOT=~/source/tbb
-LIB_DIR=$(ROOT)/build/linux_intel64_gcc_cc4.8.5_libc2.17_kernel3.10.0_release/
+#LIB_DIR=$(ROOT)/build/linux_intel64_gcc_cc4.8.5_libc2.17_kernel3.10.0_release/
+##build/lib is a symbol link
+LIB_DIR=$(ROOT)/build/lib
 HEADER = $(ROOT)/include
 SO = libkids.so
 CC = g++
