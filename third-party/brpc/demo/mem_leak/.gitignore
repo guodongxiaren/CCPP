@@ -1,0 +1,5 @@
+echo_client
+echo_server
+*.o
+*.so
+core*
