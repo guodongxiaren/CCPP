@@ -1,5 +1,6 @@
 #include <gflags/gflags.h>
 #include <butil/logging.h>
+#include <butil/time.h>
 #include <brpc/server.h>
 #include "echo.pb.h"
 #include <string>
@@ -13,11 +14,20 @@ DEFINE_int32(logoff_ms, 2000, "Maximum duration of server's LOGOFF state "
 
 namespace example {
 
-struct Arg {
+struct Param {
     std::string id;
+    std::string message;
+    int64_t start_time;
+    int64_t end_time;
+    int error_no;
+    std::string result;
 };
 
 static void* handle_one_id(void* arg) {
+    Param* param = (Param*)arg;
+    param->error_no = 0;
+    param->result = "{" + param->id + "}";
+    param->end_time = butil::gettimeofday_us();
     delete arg;
     return nullptr;
 }
@@ -38,14 +48,15 @@ public:
         LOG(INFO) << "Received request[log_id=" << cntl->log_id() 
                   << "] from " << cntl->remote_side() 
                   << " to " << cntl->local_side()
-                  << ": " << request->message()
-                  << " (attached=" << cntl->request_attachment() << ")";
+                  << ": " << request->message();
 
         for (auto& id: request->ids()) {
             bthread_t bid;
-            Arg* arg = new Arg;
-            arg->id = id;
-            bthread_start_background(&bid, NULL, handle_one_id, (void*)arg);
+            Param* param = new Param;
+            param->id = id;
+            param->message = request->message();
+            param->start_time = butil::gettimeofday_us();
+            bthread_start_background(&bid, NULL, handle_one_id, (void*)param);
               
         }
 
