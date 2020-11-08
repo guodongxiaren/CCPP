@@ -4,6 +4,7 @@ import requests
 import json
 import random
 import string
+import time
 
 def rand_str():
     return ''.join(random.sample(string.ascii_letters + string.digits, 10))
@@ -18,6 +19,7 @@ def send_req():
         data_str = json.dumps(data)
         resp = requests.get(url, data=data_str)
         print(resp.text)
+        time.sleep(0.1)
 
 if __name__ == '__main__':
     send_req()

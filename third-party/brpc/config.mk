@@ -7,9 +7,11 @@ PROTOBUF_HDR=/usr/local/include/
 CC=gcc
 CXX=g++
 GCC_VERSION=40805
-STATIC_LINKINGS= -lprotobuf
+#STATIC_LINKINGS= -lprotobuf
+STATIC_LINKINGS= -lprotobuf -ltcmalloc_and_profiler
 DYNAMIC_LINKINGS=-lpthread -lssl -lcrypto -ldl -lz -lrt -lgflags -lleveldb
-CPPFLAGS=-DBRPC_WITH_GLOG=0 -DGFLAGS_NS=google -g
+#CPPFLAGS=-DBRPC_WITH_GLOG=0 -DGFLAGS_NS=google -g
+CPPFLAGS=-DBRPC_WITH_GLOG=0 -DGFLAGS_NS=google -g -fno-omit-frame-pointer
 ifeq ($(NEED_LIBPROTOC), 1)
     STATIC_LINKINGS+=-lprotoc
 endif

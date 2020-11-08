@@ -20,15 +20,14 @@ struct Param {
     int64_t start_time;
     int64_t end_time;
     int error_no;
-    std::string result;
 };
 
 static void* handle_one_id(void* arg) {
     Param* param = (Param*)arg;
     param->error_no = 0;
-    param->result = "{" + param->id + "}";
     param->end_time = butil::gettimeofday_us();
-    delete arg;
+    //delete arg;
+    delete param;
     return nullptr;
 }
 

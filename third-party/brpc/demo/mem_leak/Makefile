@@ -33,13 +33,11 @@ LIBPATHS=$(addprefix -L, $(LIBS))
 COMMA=,
 SOPATHS=$(addprefix -Wl$(COMMA)-rpath$(COMMA), $(LIBS))
 
-CLIENT_SOURCES = client.cpp
 SERVER_SOURCES = server.cpp
 PROTOS = $(wildcard *.proto)
 
 PROTO_OBJS = $(PROTOS:.proto=.pb.o)
 PROTO_GENS = $(PROTOS:.proto=.pb.h) $(PROTOS:.proto=.pb.cc)
-CLIENT_OBJS = $(addsuffix .o, $(basename $(CLIENT_SOURCES))) 
 SERVER_OBJS = $(addsuffix .o, $(basename $(SERVER_SOURCES))) 
 
 ifeq ($(SYSTEM),Darwin)
@@ -58,7 +56,7 @@ else ifeq ($(SYSTEM),Linux)
 endif
 
 .PHONY:all
-all: echo_client echo_server
+all: echo_server
 
 .PHONY:clean
 clean:
