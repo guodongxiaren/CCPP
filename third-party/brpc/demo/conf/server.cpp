@@ -45,6 +45,8 @@ public:
 int main(int argc, char* argv[]) {
     proto_conf::Configure<Conf> conf;
     conf.load("./global.conf");
+    auto& msg = conf.instance();
+    std::cout<<msg.name()<<std::endl;
     GFLAGS_NS::ParseCommandLineFlags(&argc, &argv, true);
 
     brpc::Server server;
