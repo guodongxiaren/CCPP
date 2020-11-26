@@ -73,7 +73,7 @@ else
 	@$(CXX) $(LIBPATHS) $(LINK_OPTIONS) -o $@
 endif
 
-echo_server:$(PROTO_OBJS) $(SERVER_OBJS)
+echo_server:$(PROTO_OBJS) $(SERVER_OBJS) proto_conf.o
 	@echo "Linking $@"
 ifneq ("$(LINK_SO)", "")
 	@$(CXX) -lyaml-cpp $(LIBPATHS) $(SOPATHS) $(LINK_OPTIONS_SO) -o $@

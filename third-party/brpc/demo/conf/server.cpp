@@ -43,9 +43,8 @@ public:
 }  // namespace example
 
 int main(int argc, char* argv[]) {
-    proto_conf::Configure<Conf> conf;
-    conf.load("./global.conf");
-    auto& msg = conf.instance();
+    proto_conf::Configure<Conf>::instance().load("./global.conf");
+    auto& msg = proto_conf::Configure<Conf>::instance().pb();
     std::cout<<msg.name()<<std::endl;
     GFLAGS_NS::ParseCommandLineFlags(&argc, &argv, true);
 
