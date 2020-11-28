@@ -1,6 +1,0 @@
-syntax = "proto3";
-message Conf {
-    string name = 1;
-    int32 type = 2;
-    repeated string white_list = 3;
-}
