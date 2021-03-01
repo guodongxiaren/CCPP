@@ -1,0 +1,26 @@
+#include <gflags/gflags.h>
+#include <brpc/server.h>
+#include <bthread/unstable.h>                  // bthread_timer_add
+#include <iostream>
+#include "echo.pb.h"
+using namespace std;
+
+DEFINE_int32(port, 8000, "TCP Port of this server");
+
+class TimerGuard {
+    typedef void (*on_timer_t)(void*);
+public:
+    TimerGuard(on_timer_t timer_func, int interval_s):_timer_func(timer_func), _interval_s(interval_s) {}
+    ~TimerGuard() {
+        bthread_timer_t timer;
+        if (bthread_timer_add(&timer, butil::seconds_from_now(_interval_s),
+                              _timer_func, NULL) != 0) {
+            cerr << "add timer task failed"<< endl;
+        }
+    }
+
+private:
+    on_timer_t _timer_func;
+    int _interval_s; // 定时任务执行间隔，单位秒
+};
+
