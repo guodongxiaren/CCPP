@@ -53,6 +53,20 @@ int main () {
         auto end = chrono::steady_clock::now();
         cout<< "block 2 cost:" << chrono::duration_cast<chrono::microseconds>(end - start).count()<<endl;
     }
+    cout << "----------" << endl;
+    {   // 代码块 3
+        auto start = chrono::steady_clock::now();
+        vector<long> sum(M, 0);
+        vector<thread> td;
+        for (int i = 0; i < M; ++i) {
+            td.emplace_back(foo2, v, sum, i);
+        }
+        for (int i = 0; i < M; ++i) {
+            td[i].join();
+        }
+        auto end = chrono::steady_clock::now();
+        cout<< "block 3 cost:" << chrono::duration_cast<chrono::microseconds>(end - start).count()<<endl;
+    }
 
 }
 /*
