@@ -3,6 +3,7 @@
 #include <functional>
 #include <pthread.h>
 using namespace std;
+// clang++ -std=c++11 -pthread pthread_create_cpp.cpp
 
 void echo(const std::string& str) {
     cout<<"---"<<endl;
@@ -27,6 +28,7 @@ struct A {
 
     void* operator()(void*) {
         cout<<"xxxx"<<endl;
+        return nullptr;
     }
 };
 int main()
