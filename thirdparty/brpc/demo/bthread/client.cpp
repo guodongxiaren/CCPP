@@ -35,28 +35,21 @@ DEFINE_int32(max_retry, 3, "Max retries(not including the first RPC)");
 DEFINE_int32(interval_ms, 1000, "Milliseconds between consecutive requests");
 
 template<class Fn, class... Args>
-void call_bthread(const bthread_attr_t* attr, Fn&& fn, Args&&... args) {
-    bthread_t th;
-    auto l = new auto([=]{ fn(args...);   });
-    auto te = [](void* ar) ->void* {
-        auto f = reinterpret_cast<decltype(l)>(ar);
+void call_bthread(bthread_t& th, const bthread_attr_t* attr, Fn&& fn, Args&&... args) {
+    auto p_wrap_fn = new auto([=]{ fn(args...);   });
+    auto call_back = [](void* ar) ->void* {
+        auto f = reinterpret_cast<decltype(p_wrap_fn)>(ar);
         (*f)();
         delete f;
         return nullptr;
     };
 
-    bthread_start_background(&th, attr, te, l);
-    bthread_join(th, NULL);
+    bthread_start_background(&th, attr, call_back, p_wrap_fn);
 }
-/*
-template<class Fn, class... Args>
-void call_bthread(Fn&& fn, Args&&... args) {
-    call_bthread(NULL, std::forward<Fn>(fn), std::forward<Args>(args)...);
-}
-*/
-template<class Fn, class... Args>
+
 class Bthread {
 public:
+    template<class Fn, class... Args>
     Bthread(const bthread_attr_t* attr, Fn&& fn, Args&&... args) {
         auto p_wrap_fn = new auto([=]{ fn(args...);   });
         auto call_back = [](void* ar) ->void* {
@@ -66,12 +59,8 @@ public:
             return nullptr;
         };
 
-        bthread_start_background(th_, attr, call_back, (void*)p_wrap_fn);
+        bthread_start_background(&th_, attr, call_back, (void*)p_wrap_fn);
         joinable_ = true;
-    }
-    Bthread(Fn&& fn, Args&&... args) {
-        //Bthread(NULL, fn, args...);
-        Bthread(NULL, std::forward<Fn>(fn), std::forward<Args>(args)...);
     }
 
     void join() {
@@ -91,7 +80,6 @@ public:
 private:
     bthread_t th_;
     bool joinable_ = false;
-    
 };
 
 void echo (const std::string& xxx) {
@@ -101,7 +89,13 @@ void echo (const std::string& xxx) {
 
 int main(int argc, char* argv[]) {
     //Bthread bth(NULL, echo, "abc");
-    call_bthread(NULL, echo, "abc");
+    bthread_t th;
+    call_bthread(th, NULL, echo, "abc");
+    bthread_join(th, NULL);
+
+    //Bthread bt(echo, "hello world");
+    Bthread bt(NULL, echo, "hello world");
+    bt.join();
     // Parse gflags. We recommend you to use gflags as well.
     GFLAGS_NS::ParseCommandLineFlags(&argc, &argv, true);
     
