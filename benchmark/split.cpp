@@ -1,5 +1,6 @@
 #include <benchmark/benchmark.h>
 #include <string>
+#include <string_view>
 #include <vector>
 #include <sstream>
 #include <iostream>
@@ -59,6 +60,38 @@ void split3(std::vector<std::string> &vec, std::string str, char delim) {
     }
 }
 
+/*
+void string_view_split(std::vector<std::string_view> &vec, std::string str, char delim) {
+    std::string_view sv(str);
+    int start = 0;
+    while (start < sv.size()) {
+        size_t end = sv.find(delim, start);
+        if (end == std::string::npos) {
+            vec.emplace_back(sv.substr(start));
+            break;
+        }
+        vec.emplace_back(sv.substr(start, end-start));
+        start = end + 1;
+    }
+}
+*/
+
+void string_view_split2(std::vector<std::string> &vec, std::string str, char delim) {
+    std::string_view sv(str);
+    int start = 0;
+    while (start < sv.size()) {
+        size_t end = sv.find(delim, start);
+        if (end == std::string::npos) {
+            auto nsv = sv.substr(start);
+            vec.emplace_back(nsv.data(), nsv.size());
+            break;
+        }
+        auto nsv = sv.substr(start, end-start);
+        vec.emplace_back(nsv.data(), nsv.size());
+        start = end + 1;
+    }
+}
+
 void strtok_split(std::vector<std::string> &vec, std::string str, char delim) {
     const int MAX_BUF_SIZE = 1024;
     char* save = NULL;
@@ -80,46 +113,21 @@ void strtok_split(std::vector<std::string> &vec, std::string str, char delim) {
 const std::string global_str = "1234_56_890_abcd_efg_hijk_lmn_opq_rst_uvw_xyz_1111_222_444";
 
 
-static void BM_split0(benchmark::State& state) {
-    for (auto _ : state) {
-        std::vector<std::string> vec;
-        split0(vec, global_str, '_');
-    }
-}
-BENCHMARK(BM_split0);
+#define BM(func) static void BM_##func(benchmark::State& state) { \
+    for (auto _ : state) { \
+        std::vector<std::string> vec; \
+        func(vec, global_str, '_'); \
+    } \
+} \
+BENCHMARK(BM_##func);
 
-static void BM_split1(benchmark::State& state) {
-    for (auto _ : state) {
-        std::vector<std::string> vec;
-        split1(vec, global_str, '_');
-    }
-}
-BENCHMARK(BM_split1);
+BM(split0)
+BM(split1)
+BM(split2)
+BM(split3)
+BM(string_view_split2)
+BM(strtok_split)
 
-static void BM_split2(benchmark::State& state) {
-    for (auto _ : state) {
-        std::vector<std::string> vec;
-        split2(vec, global_str, '_');
-    }
-}
-BENCHMARK(BM_split2);
-
-
-static void BM_split3(benchmark::State& state) {
-    for (auto _ : state) {
-        std::vector<std::string> vec;
-        split3(vec, global_str, '_');
-    }
-}
-BENCHMARK(BM_split3);
-
-static void BM_strtok_split(benchmark::State& state) {
-    for (auto _ : state) {
-        std::vector<std::string> vec;
-        strtok_split(vec, global_str, '_');
-    }
-}
-BENCHMARK(BM_strtok_split);
 
 static void BM_boost_split0(benchmark::State& state) {
     for (auto _ : state) {
